@@ -23,7 +23,7 @@ ClientSide.validate = function()
       return false;
     }
 
-  ClientSide.setMessage('Fields OK!', 'text-success');
+  ClientSide.setMessage('Fields OK!', 'alert-success');
 
   //return true;
   return false;
@@ -45,10 +45,17 @@ ClientSide.fieldError = function(fieldObj, message)
 ClientSide.setMessage = function(message, messageType)
 {
   if (messageType === undefined)
-    messageType = 'text-error';
+    messageType = 'alert-error';
 
-  $('#generalMessages').addClass(messageType);
-  $('#generalMessages').text(message);
+  $('#generalMessages span').text(message);
+  $('#generalMessages').removeClass('alert-error').removeClass('alert-success').
+    addClass(messageType).show();
+}
+////////////////////////////////////////////////////////////////////////////////
+ClientSide.dismissAlert = function()
+{
+  $('#generalMessages').hide();
+  return;
 }
 ////////////////////////////////////////////////////////////////////////////////
 ClientSide.test = function()
@@ -60,6 +67,7 @@ ClientSide.test = function()
 ClientSide.start = function()
 {
   $('#quickSubmit').click(ClientSide.validate);
+  $('#dismissAlert').click(ClientSide.dismissAlert);
   return;
 }
 ////////////////////////////////////////////////////////////////////////////////
