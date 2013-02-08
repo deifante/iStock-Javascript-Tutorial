@@ -3,29 +3,19 @@ var ClientSide = {};
 ClientSide.validate = function()
 {
   var hasErrors = false;
-  if ($('#firstName').val().trim().length == 0)
-    {
-      ClientSide.fieldError('#firstName', '"First Name" cannot be empty.');
-      hasErrors = true;
-    }
-  else
-    ClientSide.fieldSuccess('#firstName');
 
-  if ($('#lastName').val().trim().length == 0)
+  $('#exampleForm input[type="text"]').each(
+    function(index, element)
     {
-      ClientSide.fieldError('#lastName', '"Last Name" cannot be empty.');
-      hasErrors = true;
+      if($(this).val().trim().length == 0)
+        {
+          ClientSide.fieldError($(this), "This field cannot be empty");
+          hasErrors = true;
+        }
+      else
+        ClientSide.fieldSuccess($(this));
     }
-  else
-    ClientSide.fieldSuccess('#lastName');
-
-  if ($('#phoneNumber').val().trim().length == 0)
-    {
-      ClientSide.fieldError('#phoneNumber', '"Phone Number" cannot be empty.');
-      hasErrors = true;
-    }
-  else
-    ClientSide.fieldSuccess('#phoneNumber');
+  );
 
   if (hasErrors)
     {
@@ -39,16 +29,16 @@ ClientSide.validate = function()
   return false;
 }
 ////////////////////////////////////////////////////////////////////////////////
-ClientSide.fieldSuccess = function(fieldId)
+ClientSide.fieldSuccess = function(fieldObj)
 {
-  $(fieldId).closest('.control-group').removeClass('error').addClass('success');
-  $(fieldId).next('span.help-inline').text('OK!');
+  fieldObj.closest('.control-group').removeClass('error').addClass('success');
+  fieldObj.next('span.help-inline').text('OK!');
 }
 ////////////////////////////////////////////////////////////////////////////////
-ClientSide.fieldError = function(fieldId, message)
+ClientSide.fieldError = function(fieldObj, message)
 {
-  $(fieldId).closest('.control-group').addClass('error');
-  $(fieldId).next('span.help-inline').text(message);
+  fieldObj.closest('.control-group').addClass('error');
+  fieldObj.next('span.help-inline').text(message);
   return;
 }
 ////////////////////////////////////////////////////////////////////////////////
